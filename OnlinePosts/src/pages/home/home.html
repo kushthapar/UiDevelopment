@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color = "primary">
+    <ion-title>
+      <div style = "text-align: center;">Home</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor = 'let post of postRes | slice : 0 : 10; let i = index' (click) = 'goToPostDetails(post.title, post.body, post.userId, post.id)'>
+    <img src="../../assets/imgs/Post.png">
+    <ion-card-header>
+      <ion-card-title>
+        <div style="white-space: normal; font-weight: bold;">
+            {{post.title}}
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

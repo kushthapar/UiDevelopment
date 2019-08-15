@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color = "primary">
+    <ion-title>
+      <div style = "text-align: center;">Post Detail</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header style="white-space: normal; font-weight: bold;">
+      <ion-card-title>
+        <div>
+            {{title}}
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <span>
+        <p>
+          {{desc}}
+        </p>
+      </span>
+      <br>
+      <span style = "font-weight: bold;">Contributor:</span>
+      <span style = "float: right; color: #488aff;">{{userRes?.name}}</span>
+      <br>
+      <span style = "font-weight: bold;">Company:</span>
+      <span style = "float: right;">{{userRes?.company?.name}}</span>
+      <br>
+      <span style="font-weight: bold">Comments: </span>
+      <span style="float: right;">{{count}}</span>
+      <br>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <button ion-button color = 'primary'>Default</button> -->
+</ion-content>
