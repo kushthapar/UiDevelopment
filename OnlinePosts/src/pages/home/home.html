@@ -7,14 +7,37 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor = 'let post of postRes | slice : 0 : 10; let i = index' (click) = 'goToPostDetails(post.title, post.body, post.userId, post.id)'>
-    <img src="../../assets/imgs/Post.png">
-    <ion-card-header>
-      <ion-card-title>
-        <div style="white-space: normal; font-weight: bold;">
-            {{post.title}}
-        </div>
-      </ion-card-title>
-    </ion-card-header>
-  </ion-card>
+  <!-- <div infinteScroll class = 'search-results' [attr.infiniteScrollDistance]="'2'" [attr.infiniteScrollThrottle] ="'50'"
+   (scroll)="onScrollDown()" [attr.scrollWindow]="false">
+      <ion-card *ngFor = 'let post of postRes' (click) = 'goToPostDetails(post.title, post.body, post.userId, post.id)'>
+          <img src="../../assets/imgs/Post.png">
+          <ion-card-header>
+            <ion-card-title>
+              <div style="white-space: normal; font-weight: bold;">
+                  {{post.title}}
+              </div>
+            </ion-card-title>
+          </ion-card-header>
+        </ion-card>
+  </div> -->
+
+    <ion-card *ngFor = 'let post of postRes' (click) = 'goToPostDetails(post.title, post.body, post.userId, post.id)'>
+        <img src="../../assets/imgs/Post.png">
+        <ion-card-header>
+          <ion-card-title>
+            <div style="white-space: normal; font-weight: bold;">
+                {{post.title}}
+            </div>
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+   
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content 
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+   
+
 </ion-content>
