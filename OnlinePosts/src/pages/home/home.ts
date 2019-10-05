@@ -1,25 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
 import { PostDetails } from '../postdetails/postdetails';
+import { PostListService } from '../../app/post.list.service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  postRes: any;
-  postApiUrl = "https://jsonplaceholder.typicode.com/posts";
-
-
-  constructor(public navCtrl: NavController, private http: HttpClient) {
-
+  postRes: any = [];
+  counter: any;
+  constructor(public navCtrl: NavController, private postlistservice: PostListService) { 
+    this.getPosts();
+    this.counter = 0;
   }
 
-  ngOnInit(): void {
-    this.http.get(this.postApiUrl).subscribe(data => {
-      this.postRes = data;
+  getPosts() {
+    this.postlistservice.getPostList().subscribe(data => {
+      for(var i = 0; i < 10; i++) {
+        this.postRes.push(data[i]);
+        this.counter = 1;
+      }
     });
   }
 
@@ -32,8 +34,23 @@ export class HomePage implements OnInit {
     });
   }
 
-  // goToPostDetails() {
-  //   alert("in func");
-  // }
+  doInfinite(infiniteScroll): Promise<any> {
+    console.log('Begin async operation');
 
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.postlistservice.getPostList().subscribe(data => {
+          var start = (this.counter * 10) + 1;
+          var end = start + 9;
+          for(var i = start; i < end; i++) {
+            this.postRes.push(data[i]);
+            this.counter = 2;
+          }
+        });
+        console.log('Async operation has ended');
+        resolve();
+        infiniteScroll.complete();
+      },500);
+    })
+  }
 }
